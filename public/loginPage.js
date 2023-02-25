@@ -19,14 +19,3 @@ userForm.registerFormCallback = (data) => ApiConnector.register(data,
             userForm.setRegisterErrorMessage(respond.error);
         }
     });
-
-// ApiConnector.logout(() => location.reload());
-
-const logoutButton = new LogoutButton();
-
-logoutButton.action = () => ApiConnector.logout(
-    (logoutRes) => {
-        if (logoutRes) {
-            location.reload();
-        }
-    });
