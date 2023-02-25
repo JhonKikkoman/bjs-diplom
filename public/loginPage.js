@@ -21,3 +21,12 @@ userForm.registerFormCallback = (data) => ApiConnector.register(data,
     });
 
 // ApiConnector.logout(() => location.reload());
+
+const logoutButton = new LogoutButton();
+
+logoutButton.action = () => ApiConnector.logout(
+    (logoutRes) => {
+        if (logoutRes) {
+            location.reload();
+        }
+    });
