@@ -29,5 +29,37 @@ setInterval(() => ratesFunc(), 60000);
 
 const moneyManager = new MoneyManager();
 
-moneyManager.addMoneyCallback 
+moneyManager.addMoneyCallback = (data) => {
+    ApiConnector.addMoney(data, () => {
+        if (data.success) {
+            ProfileWidget.showProfile(data.data);
+            moneyManager.setMessage(data.success, "Текст");
+        } else {
+            moneyManager.setMessage(data.success, data.error);
+        }
+    });
+};
 
+moneyManager.conversionMoneyCallback = (data) => {
+    ApiConnector.convertMoney(data, () => {
+        if (data.success) {
+            ProfileWidget.showProfile(data.data);
+            moneyManager.setMessage(data.success, "Текст");
+        } else {
+            moneyManager.setMessage(data.success, data.error);
+        }
+    });
+};
+
+moneyManager.sendMoneyCallback = (data) => {
+    ApiConnector.transferMoney(data, () => {
+        if (data.success) {
+            ProfileWidget.showProfile(data.data);
+            moneyManager.setMessage(data.success, "Текст");
+        } else {
+            moneyManager.setMessage(data.success, data.error);
+        }
+    });
+};
+
+const favoritesWidget = new FavoritesWidget();
