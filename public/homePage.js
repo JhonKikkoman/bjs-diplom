@@ -67,7 +67,7 @@ const favoritesWidget = new FavoritesWidget();
 ApiConnector.getFavorites((data) => {
     if (data.success) {
         favoritesWidget.clearTable();
-        favoritesWidget.fillTable(data);
+        favoritesWidget.fillTable(data.data);
         moneyManager.updateUsersList(data.data);
     }
 });
@@ -76,24 +76,24 @@ favoritesWidget.addUserCallback = (data) => {
     ApiConnector.addUserToFavorites(data, () => {
         if (data.success) {
             favoritesWidget.clearTable();
-            favoritesWidget.fillTable(data);
+            favoritesWidget.fillTable(data.data);
             moneyManager.updateUsersList(data.data);
             moneyManager.setMessage(data.success, "Текст");
         } else {
-            moneyManager.setMessage(data.success, data.error);
+            favoritesWidget.setMessage(data.success, data.error);
         }
     });
 };
 
-favoritesWidget.removeUserCallback = (data) => {
-    ApiConnector.removeUserFromFavorites(data, () => {
+favoritesWidget.removeUserCallback = (objData) => {
+    ApiConnector.removeUserFromFavorites(objData, (data) => {
         if (data.success) {
             favoritesWidget.clearTable();
-            favoritesWidget.fillTable(data);
+            favoritesWidget.fillTable(data.data);
             moneyManager.updateUsersList(data.data);
             moneyManager.setMessage(data.success, "Текст");
         } else {
-            moneyManager.setMessage(data.success, data.error);
+            favoritesWidget.setMessage(data.success, data.error);
         }
     });
 };
