@@ -65,9 +65,35 @@ moneyManager.sendMoneyCallback = (data) => {
 const favoritesWidget = new FavoritesWidget();
 
 ApiConnector.getFavorites((data) => {
-    if(data.success) {
+    if (data.success) {
         favoritesWidget.clearTable();
         favoritesWidget.fillTable(data);
-        moneyManager. updateUsersList(data.data);
+        moneyManager.updateUsersList(data.data);
     }
 });
+
+favoritesWidget.addUserCallback = (data) => {
+    ApiConnector.addUserToFavorites(data, () => {
+        if (data.success) {
+            favoritesWidget.clearTable();
+            favoritesWidget.fillTable(data);
+            moneyManager.updateUsersList(data.data);
+            moneyManager.setMessage(data.success, "Текст");
+        } else {
+            moneyManager.setMessage(data.success, data.error);
+        }
+    });
+};
+
+favoritesWidget.removeUserCallback = (data) => {
+    ApiConnector.removeUserFromFavorites(data, () => {
+        if (data.success) {
+            favoritesWidget.clearTable();
+            favoritesWidget.fillTable(data);
+            moneyManager.updateUsersList(data.data);
+            moneyManager.setMessage(data.success, "Текст");
+        } else {
+            moneyManager.setMessage(data.success, data.error);
+        }
+    });
+};
