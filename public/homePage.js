@@ -63,3 +63,11 @@ moneyManager.sendMoneyCallback = (data) => {
 };
 
 const favoritesWidget = new FavoritesWidget();
+
+ApiConnector.getFavorites((data) => {
+    if(data.success) {
+        favoritesWidget.clearTable();
+        favoritesWidget.fillTable(data);
+        moneyManager. updateUsersList(data.data);
+    }
+});
